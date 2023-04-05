@@ -36,11 +36,17 @@ io.on("connection", (socket) => {
     io.emit("moveToGameRoom");
   });
 
+  socket.on("playerReady", () => {
+    const index = players.findIndex((player) => player.id === socket.id);
+    players[index].ready = !players[index].ready;
+    io.emit("playerList", players);
+  });
+
   socket.on("disconnect", () => {
     console.log(`User disconnected: ${socket.id}`);
 
     // Remove the disconnected player from the list
-    players = players.filter((playerId) => playerId !== socket.id);
+    players = players.filter((player) => player.id !== socket.id);
 
     // Notify all clients of the updated player list
     io.emit("playerList", players);

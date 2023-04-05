@@ -1,5 +1,3 @@
-import React, { useState, useEffect } from "react";
-import io from "socket.io-client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Lobby from "./pages/Lobby";
 import GameRoom from "./pages/GameRoom";
