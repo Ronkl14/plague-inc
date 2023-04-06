@@ -1,24 +1,25 @@
 {
-  "name": "plague-inc",
+  "name": "nameofyourapp",
   "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
-  "type": "module",
+  "description": "some description",
+  "main": "./server/server.js",
   "scripts": {
-    "start": "nodemon server.js",
-    "server": "node --watch server.js",
-    "client": "npm run dev --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cd ./server && node server.js"
   },
-  "author": "Ron Klik",
-  "license": "MIT",
-  "devDependencies": {
-    "concurrently": "^8.0.1"
+  "engines": {
+    "node": "16.x"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
+    "argon2": "^0.28.4",
     "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "socket.io": "^4.6.1"
+    "dotenv": "^16.0.0",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.1",
+    "validator": "^13.7.0"
   }
 }
