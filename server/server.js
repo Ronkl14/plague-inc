@@ -62,6 +62,7 @@ if (process.env.NODE_ENV === "production") {
     res.send("Server running");
   });
 }
+
 const PORT = process.env.PORT || 5000;
 
 server.listen(

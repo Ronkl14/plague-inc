@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import io from "socket.io-client";
 
-const socket = io("/", { autoConnect: false });
+const socket = io("/", { autoConnect: false, transports: ["websocket"] });
 
 function Lobby() {
   const [players, setPlayers] = useState([]);
