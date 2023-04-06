@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import http from "http";
 import { Server } from "socket.io";
 import cors from "cors";
+import path from "path";
 
 dotenv.config({ path: "./config/config.env" });
 
@@ -46,8 +47,11 @@ io.on("connection", (socket) => {
   });
 });
 
-app.get("/", (req, res) => res.send("Server running"));
+app.use(express.static(path.join(__dirname, "client/build")));
 
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client/build", "index.html"));
+});
 const PORT = process.env.PORT || 5000;
 
 server.listen(
