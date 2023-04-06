@@ -23,20 +23,17 @@ let players = [];
 io.on("connection", (socket) => {
   console.log(`New user connected: ${socket.id}`);
 
-  // Add the new player to the list
   socket.on("username", (username) => {
     players.push({ id: socket.id, username: username, ready: false });
     io.emit("playerList", players);
   });
 
-  // Notify all clients of the updated player list
-
   socket.on("startGame", () => {
-    // Move the players to the game room
     io.emit("moveToGameRoom");
   });
 
   socket.on("playerReady", () => {
+    console.log(`${socket.id} ready`);
     const index = players.findIndex((player) => player.id === socket.id);
     players[index].ready = !players[index].ready;
     io.emit("playerList", players);
@@ -44,11 +41,7 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     console.log(`User disconnected: ${socket.id}`);
-
-    // Remove the disconnected player from the list
     players = players.filter((player) => player.id !== socket.id);
-
-    // Notify all clients of the updated player list
     io.emit("playerList", players);
   });
 });
