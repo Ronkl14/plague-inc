@@ -24,6 +24,8 @@ const io = new Server(server, {
 });
 
 let players = [];
+let cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+let gameStarted = false;
 
 io.on("connection", (socket) => {
   console.log(`New user connected: ${socket.id}`);
@@ -42,6 +44,21 @@ io.on("connection", (socket) => {
     const index = players.findIndex((player) => player.id === socket.id);
     players[index].ready = !players[index].ready;
     io.emit("playerList", players);
+  });
+
+  socket.on("gameStarted", () => {
+    if (!gameStarted) {
+      players.forEach((player) => (player.cards = []));
+      for (let i = 1; i <= 5; i++) {
+        players.forEach((player) => player.cards.push(cards.shift()));
+      }
+      console.log(players[0].cards);
+      console.log(players[1].cards);
+      players.forEach((player) =>
+        io.to(player.id).emit("playerCards", player.cards)
+      );
+      gameStarted = true;
+    }
   });
 
   socket.on("disconnect", () => {

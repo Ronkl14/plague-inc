@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import io from "socket.io-client";
-
-const socket = io("/", { autoConnect: false, transports: ["websocket"] });
+import socket from "../utils/socket";
 
 function Lobby() {
   const [players, setPlayers] = useState([]);
@@ -20,6 +18,7 @@ function Lobby() {
   useEffect(() => {
     if (players.length >= 2) {
       if (players.every((player) => player.ready)) {
+        socket.emit("gameStarted");
         navigate("/game");
       }
     }
