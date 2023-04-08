@@ -7,6 +7,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import connectDB from "./config/db.js";
 import router from "./routes/router.js";
+import getShuffledNumbers from "./utils/shuffleCards.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -30,7 +31,6 @@ const io = new Server(server, {
 });
 
 let players = [];
-let cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 let gameStarted = false;
 
 io.on("connection", (socket) => {
@@ -55,6 +55,8 @@ io.on("connection", (socket) => {
   socket.on("gameStarted", () => {
     if (!gameStarted) {
       players.forEach((player) => (player.cards = []));
+      let cards = getShuffledNumbers();
+      console.log(cards);
       for (let i = 1; i <= 5; i++) {
         players.forEach((player) => player.cards.push(cards.shift()));
       }
@@ -65,6 +67,10 @@ io.on("connection", (socket) => {
       );
       gameStarted = true;
     }
+  });
+
+  socket.on("gameEnded", () => {
+    gameStarted = false;
   });
 
   socket.on("disconnect", () => {

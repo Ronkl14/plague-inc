@@ -9,3 +9,13 @@ export const createNewCard = asyncHandler(async (req, res, next) => {
     data: card,
   });
 });
+
+export const getCard = asyncHandler(async (req, res, next) => {
+  const id = req.params.id;
+  const card = await TraitCard.find({ cardID: id });
+
+  res.status(200).json({
+    success: true,
+    data: card,
+  });
+});

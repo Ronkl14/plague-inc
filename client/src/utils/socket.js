@@ -5,7 +5,7 @@ let socket;
 if (process.env.NODE_ENV === "production") {
   socket = io("/", { autoConnect: false, transports: ["websocket"] });
 } else {
-  socket = io("/", { autoConnect: false });
+  socket = io("http://localhost:5000", { autoConnect: false });
 }
 
 export default socket;

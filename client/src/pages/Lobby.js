@@ -12,6 +12,7 @@ function Lobby() {
     socket.on("playerList", setPlayers);
     return () => {
       socket.off("playerList", setPlayers);
+      socket.emit("gameEnded");
     };
   }, []);
 
