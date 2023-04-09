@@ -1,5 +1,3 @@
-import { NUMBER_OF_TRAIT_CARDS } from "../constants/constants.js";
-
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -8,9 +6,9 @@ function shuffleArray(array) {
   return array;
 }
 
-function getShuffledNumbers() {
+function getShuffledNumbers(numberOfCards) {
   const numbers = [];
-  for (let i = 1; i <= NUMBER_OF_TRAIT_CARDS; i++) {
+  for (let i = 1; i <= numberOfCards; i++) {
     numbers.push(i);
   }
   return shuffleArray(numbers);

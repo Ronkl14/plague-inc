@@ -8,6 +8,10 @@ import { fileURLToPath } from "url";
 import connectDB from "./config/db.js";
 import router from "./routes/router.js";
 import getShuffledNumbers from "./utils/shuffleCards.js";
+import {
+  NUMBER_OF_TRAIT_CARDS,
+  NUMBER_OF_COUNTRY_CARDS,
+} from "./constants/constants.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -31,6 +35,7 @@ const io = new Server(server, {
 });
 
 let players = [];
+let countries = [];
 let gameStarted = false;
 
 io.on("connection", (socket) => {
@@ -55,16 +60,15 @@ io.on("connection", (socket) => {
   socket.on("gameStarted", () => {
     if (!gameStarted) {
       players.forEach((player) => (player.cards = []));
-      let cards = getShuffledNumbers();
-      console.log(cards);
+      let cards = getShuffledNumbers(NUMBER_OF_TRAIT_CARDS);
       for (let i = 1; i <= 5; i++) {
         players.forEach((player) => player.cards.push(cards.shift()));
       }
-      console.log(players[0].cards);
-      console.log(players[1].cards);
       players.forEach((player) =>
         io.to(player.id).emit("playerCards", player.cards)
       );
+      countries = getShuffledNumbers(NUMBER_OF_COUNTRY_CARDS);
+      io.emit("countryCards", countries);
       gameStarted = true;
     }
   });
