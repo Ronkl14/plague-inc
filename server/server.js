@@ -7,6 +7,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import connectDB from "./config/db.js";
 import router from "./routes/router.js";
+
 import getShuffledNumbers from "./utils/shuffleCards.js";
 import {
   NUMBER_OF_TRAIT_CARDS,
@@ -98,6 +99,13 @@ io.on("connection", (socket) => {
       countries = getShuffledNumbers(NUMBER_OF_COUNTRY_CARDS);
       io.emit("countryCards", countries);
       io.emit("board", board);
+      const playerOrderIndices = getShuffledNumbers(players.length);
+      let playerTurnOrder = new Array(players.length);
+      playerOrderIndices.forEach(
+        (index) => (playerTurnOrder[index - 1] = players[index - 1].id)
+      );
+      io.emit("playerTurns", playerTurnOrder);
+      console.log(playerTurnOrder);
       gameStarted = true;
     }
   });

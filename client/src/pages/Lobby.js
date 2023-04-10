@@ -44,7 +44,7 @@ function Lobby() {
       <input value={username} onChange={changeHandler}></input>
       <button onClick={connectHandler}>Connect</button>
       {players.map((player) => (
-        <p>
+        <p key={player.id}>
           {player.id}, {player.username}, {player.ready ? "yes" : "no"}
         </p>
       ))}

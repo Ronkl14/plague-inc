@@ -1,0 +1,10 @@
+.country-container {
+  height: 250px;
+  width: 150px;
+  border: 1px solid black;
+}
+
+.country-stack {
+  display: flex;
+  gap: 10px;
+}

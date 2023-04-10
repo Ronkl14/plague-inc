@@ -23,14 +23,15 @@ const Countries = () => {
   }, [countryCardsIndices]);
 
   return (
-    <div>
+    <div className="country-stack">
       {countryCards.length === 0 ? (
         ""
       ) : (
         <>
-          <p>{countryCards[0][0].name}</p>
-          <p>{countryCards[1][0].name}</p>
-          <p>{countryCards[2][0].name}</p>
+          <p className="country-container">Stack</p>
+          <p className="country-container">{countryCards[0][0].name}</p>
+          <p className="country-container">{countryCards[1][0].name}</p>
+          <p className="country-container">{countryCards[2][0].name}</p>
         </>
       )}
     </div>

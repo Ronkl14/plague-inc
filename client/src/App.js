@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Lobby from "./pages/Lobby";
-import GameRoom from "./pages/GameRoom";
+import { Lobby, GameRoom } from "./pages";
+import { PlayerProvider } from "./context/PlayerContext";
+import "./css/App.css";
 
 function App() {
   const router = createBrowserRouter([
@@ -8,7 +9,11 @@ function App() {
     { path: "/game", element: <GameRoom /> },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <PlayerProvider>
+      <RouterProvider router={router} />
+    </PlayerProvider>
+  );
 }
 
 export default App;

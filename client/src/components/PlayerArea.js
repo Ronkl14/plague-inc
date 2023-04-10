@@ -23,7 +23,9 @@ const PlayerArea = () => {
 
   return (
     <div>
-      {cards.length === 0 ? "" : cards.map((card) => <p>{card[0].name}</p>)}
+      {cards.length === 0
+        ? ""
+        : cards.map((card) => <p key={card[0].cardID}>{card[0].name}</p>)}
     </div>
   );
 };

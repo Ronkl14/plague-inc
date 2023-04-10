@@ -14,10 +14,10 @@ const Board = () => {
         ? ""
         : board.map((continent) => {
             return (
-              <div>
+              <div key={continent.continent}>
                 <h2>{continent.continent}</h2>
                 {Array.from({ length: continent.countriesNum }, (_, i) => (
-                  <div key={i}>HI</div>
+                  <div className={`country-container ${i}`} key={i}></div>
                 ))}
               </div>
             );
