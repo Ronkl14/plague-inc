@@ -1,4 +1,3 @@
-import React from "react";
 import socket from "../utils/socket";
 import { useState, useEffect } from "react";
 import { getTraitCard } from "../api/api";

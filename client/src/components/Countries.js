@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import socket from "../utils/socket";
 import { getCountryCard } from "../api/api";
 
@@ -21,10 +21,6 @@ const Countries = () => {
     };
     fetchCards();
   }, [countryCardsIndices]);
-
-  useEffect(() => {
-    console.log(countryCards);
-  }, [countryCards]);
 
   return (
     <div>

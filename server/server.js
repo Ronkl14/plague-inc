@@ -37,6 +37,34 @@ const io = new Server(server, {
 let players = [];
 let countries = [];
 let gameStarted = false;
+let board = [
+  { continent: "North America", countriesNum: 3, countries: [] },
+  {
+    continent: "South America",
+    countriesNum: 4,
+    countries: [],
+  },
+  {
+    continent: "Europe",
+    countriesNum: 5,
+    countries: [],
+  },
+  {
+    continent: "Africa",
+    countriesNum: 5,
+    countries: [],
+  },
+  {
+    continent: "Asia",
+    countriesNum: 5,
+    countries: [],
+  },
+  {
+    continent: "Oceania",
+    countriesNum: 3,
+    countries: [],
+  },
+];
 
 io.on("connection", (socket) => {
   console.log(`New user connected: ${socket.id}`);
@@ -69,6 +97,7 @@ io.on("connection", (socket) => {
       );
       countries = getShuffledNumbers(NUMBER_OF_COUNTRY_CARDS);
       io.emit("countryCards", countries);
+      io.emit("board", board);
       gameStarted = true;
     }
   });
