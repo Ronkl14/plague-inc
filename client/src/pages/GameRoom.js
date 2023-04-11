@@ -4,14 +4,12 @@ import { useEffect } from "react";
 import socket from "../utils/socket";
 
 const GameRoom = () => {
-  const { setPlayerTurnOrder, setCurrentPlayer, setPlayers } =
-    usePlayerGlobalContext();
+  const { setPlayerTurnOrder, setCurrentPlayer } = usePlayerGlobalContext();
 
   useEffect(() => {
     socket.on("playerTurns", setPlayerTurnOrder);
     socket.on("currentPlayer", setCurrentPlayer);
-    socket.on("playerList", setPlayers);
-  }, [setCurrentPlayer, setPlayerTurnOrder, setPlayers]);
+  }, [setCurrentPlayer, setPlayerTurnOrder]);
 
   return (
     <>

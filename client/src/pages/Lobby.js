@@ -10,14 +10,6 @@ function Lobby() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    socket.on("playerList", setPlayers);
-    return () => {
-      socket.off("playerList", setPlayers);
-      socket.emit("gameEnded");
-    };
-  }, [setPlayers]);
-
-  useEffect(() => {
     console.log(players);
     if (players.length >= 2) {
       if (players.every((player) => player.ready)) {
