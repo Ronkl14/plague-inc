@@ -39,7 +39,7 @@ let players = [];
 let countries = [];
 let gameStarted = false;
 let currentPlayerIndex = 0;
-let playerTurnOrder;
+let playerTurnOrder, currentPlayer;
 let board = [
   { continent: "North America", countriesNum: 3, countries: [] },
   {
@@ -72,8 +72,14 @@ let board = [
 io.on("connection", (socket) => {
   console.log(`New user connected: ${socket.id}`);
 
-  socket.on("username", (username) => {
-    players.push({ id: socket.id, username: username, ready: false, score: 0 });
+  socket.on("enterLobby", (username, color) => {
+    players.push({
+      id: socket.id,
+      username: username,
+      ready: false,
+      color: color,
+      score: 0,
+    });
     io.emit("playerList", players);
   });
 
@@ -91,9 +97,9 @@ io.on("connection", (socket) => {
       for (let i = 1; i <= 5; i++) {
         players.forEach((player) => player.cards.push(cards.shift()));
       }
-      players.forEach((player) =>
-        io.to(player.id).emit("playerCards", player.cards)
-      );
+      players.forEach((player) => {
+        io.to(player.id).emit("playerCards", player.cards);
+      });
       countries = getShuffledNumbers(NUMBER_OF_COUNTRY_CARDS);
       io.emit("countryCards", countries);
       io.emit("board", board);
@@ -108,9 +114,12 @@ io.on("connection", (socket) => {
         players[idx].score = scoreReset;
         scoreReset += 1;
       });
+      currentPlayer = players.find(
+        (player) => player.id === playerTurnOrder[currentPlayerIndex]
+      );
       io.emit("playerList", players);
       io.emit("playerTurns", playerTurnOrder);
-      io.emit("currentPlayer", playerTurnOrder[currentPlayerIndex]);
+      io.emit("currentPlayer", currentPlayer);
       gameStarted = true;
     }
   });
@@ -121,7 +130,10 @@ io.on("connection", (socket) => {
     } else {
       currentPlayerIndex += 1;
     }
-    io.emit("currentPlayer", playerTurnOrder[currentPlayerIndex]);
+    currentPlayer = players.find(
+      (player) => player.id === playerTurnOrder[currentPlayerIndex]
+    );
+    io.emit("currentPlayer", currentPlayer);
   });
 
   socket.on("gameEnded", () => {

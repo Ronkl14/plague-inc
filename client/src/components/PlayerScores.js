@@ -13,7 +13,12 @@ const PlayerScores = () => {
     <div>
       {playerTurnOrder.map((id) => {
         return (
-          <p key={id} className={currentPlayer === id ? "current-player" : ""}>
+          <p
+            key={id}
+            className={`${currentPlayer.id === id ? "current-player" : ""} ${
+              players.find((user) => user.id === id).color
+            }`}
+          >
             {players.find((user) => user.id === id).username}, DNA:
             {players.find((user) => user.id === id).score}
           </p>

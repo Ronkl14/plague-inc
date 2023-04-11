@@ -15,7 +15,10 @@ const Countries = () => {
       <div className="country-stack">
         <p className="country-container">Stack</p>
         {countryCards.slice(0, 3).map((country) => (
-          <div className="country-container">{country[0].name}</div>
+          <div key={country[0].cardID} className="country-container">
+            <p>{country[0].name}</p>
+            <p>{country[0].continent}</p>
+          </div>
         ))}
       </div>
     )
