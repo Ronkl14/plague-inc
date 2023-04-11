@@ -18,6 +18,11 @@ const Countries = () => {
           <div key={country[0].cardID} className="country-container">
             <p>{country[0].name}</p>
             <p>{country[0].continent}</p>
+            <div className="cities-container">
+              {Array.from({ length: country[0].cities }, (_, i) => (
+                <div className={`city ${i}`} key={i}></div>
+              ))}
+            </div>
           </div>
         ))}
       </div>
