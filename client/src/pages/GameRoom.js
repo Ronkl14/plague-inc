@@ -11,7 +11,7 @@ const GameRoom = () => {
     socket.on("playerTurns", setPlayerTurnOrder);
     socket.on("currentPlayer", setCurrentPlayer);
     socket.on("playerList", setPlayers);
-  }, []);
+  }, [setCurrentPlayer, setPlayerTurnOrder, setPlayers]);
 
   return (
     <>

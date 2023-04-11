@@ -15,7 +15,7 @@ function Lobby() {
       socket.off("playerList", setPlayers);
       socket.emit("gameEnded");
     };
-  }, []);
+  }, [setPlayers]);
 
   useEffect(() => {
     console.log(players);
