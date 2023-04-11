@@ -38,6 +38,8 @@ const io = new Server(server, {
 let players = [];
 let countries = [];
 let gameStarted = false;
+let currentPlayerIndex = 0;
+let playerTurnOrder;
 let board = [
   { continent: "North America", countriesNum: 3, countries: [] },
   {
@@ -75,10 +77,6 @@ io.on("connection", (socket) => {
     io.emit("playerList", players);
   });
 
-  socket.on("startGame", () => {
-    io.emit("moveToGameRoom");
-  });
-
   socket.on("playerReady", () => {
     console.log(`${socket.id} ready`);
     const index = players.findIndex((player) => player.id === socket.id);
@@ -100,19 +98,35 @@ io.on("connection", (socket) => {
       io.emit("countryCards", countries);
       io.emit("board", board);
       const playerOrderIndices = getShuffledNumbers(players.length);
-      let playerTurnOrder = new Array(players.length);
+      playerTurnOrder = new Array(players.length);
       playerOrderIndices.forEach(
         (index) => (playerTurnOrder[index - 1] = players[index - 1].id)
       );
-      let currentPlayerIndex = 0;
+      let scoreReset = 0;
+      playerTurnOrder.forEach((id) => {
+        const idx = players.findIndex((player) => player.id === id);
+        players[idx].score = scoreReset;
+        scoreReset += 1;
+      });
+      io.emit("playerList", players);
       io.emit("playerTurns", playerTurnOrder);
       io.emit("currentPlayer", playerTurnOrder[currentPlayerIndex]);
       gameStarted = true;
     }
   });
 
+  socket.on("turnEnded", () => {
+    if (currentPlayerIndex === players.length - 1) {
+      currentPlayerIndex = 0;
+    } else {
+      currentPlayerIndex += 1;
+    }
+    io.emit("currentPlayer", playerTurnOrder[currentPlayerIndex]);
+  });
+
   socket.on("gameEnded", () => {
     gameStarted = false;
+    currentPlayerIndex = 0;
   });
 
   socket.on("disconnect", () => {
