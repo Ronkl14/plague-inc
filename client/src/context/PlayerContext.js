@@ -4,9 +4,20 @@ const PlayerContext = createContext();
 
 const PlayerProvider = ({ children }) => {
   const [playerTurnOrder, setPlayerTurnOrder] = useState([]);
+  const [players, setPlayers] = useState([]);
+  const [currentPlayer, setCurrentPlayer] = useState("");
 
   return (
-    <PlayerContext.Provider value={{ playerTurnOrder, setPlayerTurnOrder }}>
+    <PlayerContext.Provider
+      value={{
+        playerTurnOrder,
+        setPlayerTurnOrder,
+        players,
+        setPlayers,
+        currentPlayer,
+        setCurrentPlayer,
+      }}
+    >
       {children}
     </PlayerContext.Provider>
   );

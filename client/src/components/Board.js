@@ -9,16 +9,18 @@ const Board = () => {
   }, []);
 
   return (
-    <div>
+    <div className="game-board">
       {board.length === 0
         ? ""
         : board.map((continent) => {
             return (
-              <div key={continent.continent}>
+              <div key={continent.continent} className="continent-container">
                 <h2>{continent.continent}</h2>
-                {Array.from({ length: continent.countriesNum }, (_, i) => (
-                  <div className={`country-container ${i}`} key={i}></div>
-                ))}
+                <div className="continent-cards-container">
+                  {Array.from({ length: continent.countriesNum }, (_, i) => (
+                    <div className={`country-container ${i}`} key={i}></div>
+                  ))}
+                </div>
               </div>
             );
           })}

@@ -1,21 +1,19 @@
-import { PlayerArea, Countries, Board } from "../components";
+import { PlayerArea, Countries, Board, PlayerScores } from "../components";
 import { usePlayerGlobalContext } from "../context/PlayerContext";
 import { useEffect } from "react";
 import socket from "../utils/socket";
 
 const GameRoom = () => {
-  const { playerTurnOrder, setPlayerTurnOrder } = usePlayerGlobalContext();
+  const { setPlayerTurnOrder, setCurrentPlayer } = usePlayerGlobalContext();
 
   useEffect(() => {
     socket.on("playerTurns", setPlayerTurnOrder);
+    socket.on("currentPlayer", setCurrentPlayer);
   }, []);
-
-  useEffect(() => {
-    console.log(playerTurnOrder);
-  }, [playerTurnOrder]);
 
   return (
     <>
+      <PlayerScores />
       <PlayerArea />
       <Countries />
       <Board />

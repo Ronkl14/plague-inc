@@ -71,7 +71,7 @@ io.on("connection", (socket) => {
   console.log(`New user connected: ${socket.id}`);
 
   socket.on("username", (username) => {
-    players.push({ id: socket.id, username: username, ready: false });
+    players.push({ id: socket.id, username: username, ready: false, score: 0 });
     io.emit("playerList", players);
   });
 
@@ -104,8 +104,9 @@ io.on("connection", (socket) => {
       playerOrderIndices.forEach(
         (index) => (playerTurnOrder[index - 1] = players[index - 1].id)
       );
+      let currentPlayerIndex = 0;
       io.emit("playerTurns", playerTurnOrder);
-      console.log(playerTurnOrder);
+      io.emit("currentPlayer", playerTurnOrder[currentPlayerIndex]);
       gameStarted = true;
     }
   });

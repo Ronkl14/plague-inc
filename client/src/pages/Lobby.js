@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import socket from "../utils/socket";
+import { usePlayerGlobalContext } from "../context/PlayerContext";
 
 function Lobby() {
-  const [players, setPlayers] = useState([]);
+  const { players, setPlayers } = usePlayerGlobalContext();
   const [username, setUsername] = useState("");
 
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ function Lobby() {
   }, []);
 
   useEffect(() => {
+    console.log(players);
     if (players.length >= 2) {
       if (players.every((player) => player.ready)) {
         socket.emit("gameStarted");
