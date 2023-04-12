@@ -6,9 +6,17 @@ import useFetchCards from "../hooks/useFetchCards";
 const Countries = () => {
   const [countryCardsIndices, setCountryCardsIndices] = useState([]);
   const countryCards = useFetchCards(countryCardsIndices, getCountryCard);
+  const [startingCountryIndex, setStartingCountryIndex] = useState([]);
+  const startingCountry = useFetchCards(startingCountryIndex, getCountryCard);
+
   useEffect(() => {
     socket.on("countryCards", setCountryCardsIndices);
+    socket.on("startingCountry", setStartingCountryIndex);
   }, []);
+
+  useEffect(() => {
+    console.log(startingCountry);
+  }, [startingCountry]);
 
   return (
     countryCards.length !== 0 && (

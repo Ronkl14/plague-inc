@@ -101,6 +101,11 @@ io.on("connection", (socket) => {
         io.to(player.id).emit("playerCards", player.cards);
       });
       countries = getShuffledNumbers(NUMBER_OF_COUNTRY_CARDS);
+      players.forEach((player) => {
+        let startingCountry = [];
+        startingCountry.push(countries.shift());
+        io.to(player.id).emit("startingCountry", startingCountry);
+      });
       io.emit("countryCards", countries);
       io.emit("board", board);
       const playerOrderIndices = getShuffledNumbers(players.length);
