@@ -1,8 +1,16 @@
 import axios from "axios";
 
-const api = axios.create({
-  baseURL: "/api/v1",
-});
+let api;
+
+if (process.env.NODE_ENV === "production") {
+  api = axios.create({
+    baseURL: "/api/v1",
+  });
+} else {
+  api = axios.create({
+    baseURL: "http://localhost:5000/api/v1",
+  });
+}
 
 export async function getTraitCard(id) {
   try {

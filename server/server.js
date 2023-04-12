@@ -13,6 +13,7 @@ import {
   NUMBER_OF_TRAIT_CARDS,
   NUMBER_OF_COUNTRY_CARDS,
 } from "./constants/constants.js";
+import { count } from "console";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -41,31 +42,41 @@ let gameStarted = false;
 let currentPlayerIndex = 0;
 let playerTurnOrder, currentPlayer;
 let board = [
-  { continent: "North America", countriesNum: 3, countries: new Array(3) },
+  {
+    continent: "North America",
+    countriesNum: 3,
+    countries: new Array(3),
+    idx: 0,
+  },
   {
     continent: "South America",
     countriesNum: 4,
     countries: new Array(4),
+    idx: 0,
   },
   {
     continent: "Europe",
     countriesNum: 5,
     countries: new Array(5),
+    idx: 0,
   },
   {
     continent: "Africa",
     countriesNum: 5,
     countries: new Array(5),
+    idx: 0,
   },
   {
     continent: "Asia",
     countriesNum: 5,
     countries: new Array(5),
+    idx: 0,
   },
   {
     continent: "Oceania",
     countriesNum: 3,
     countries: new Array(3),
+    idx: 0,
   },
 ];
 
@@ -127,6 +138,17 @@ io.on("connection", (socket) => {
       io.emit("currentPlayer", currentPlayer);
       gameStarted = true;
     }
+  });
+
+  socket.on("placeCountry", (country) => {
+    console.log(country);
+    const continentIndex = board.findIndex(
+      (continent) => continent.continent === country.continent
+    );
+    console.log(board[continentIndex]);
+    const countryIndex = board[continentIndex].idx;
+    board[continentIndex].countries[countryIndex] = country;
+    io.emit("board", board);
   });
 
   socket.on("turnEnded", () => {
