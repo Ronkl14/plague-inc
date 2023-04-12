@@ -9,7 +9,7 @@ const Board = () => {
   }, []);
 
   useEffect(() => {
-    // console.log(board);
+    console.log(board);
   }, [board]);
 
   return (
@@ -20,9 +20,20 @@ const Board = () => {
             <div key={continent.continent} className="continent-container">
               <h2>{continent.continent}</h2>
               <div className="continent-cards-container">
-                {continent.countries.map((country) => (
-                  <div className="country-container">{country?.name}</div>
-                ))}
+                {continent.countries.map((country) => {
+                  return (
+                    <div className="country-container" key={Math.random()}>
+                      {country?.name}
+                      <div className="cities-container">
+                        {country?.control.map((city) => {
+                          return (
+                            <div className={`city ${city?.color}-city`}></div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           );

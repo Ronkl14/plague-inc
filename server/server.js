@@ -8,12 +8,11 @@ import { fileURLToPath } from "url";
 import connectDB from "./config/db.js";
 import router from "./routes/router.js";
 
-import getShuffledNumbers from "./utils/shuffleCards.js";
+import { getShuffledNumbers, resetBoard } from "./utils/index.js";
 import {
   NUMBER_OF_TRAIT_CARDS,
   NUMBER_OF_COUNTRY_CARDS,
 } from "./constants/constants.js";
-import { count } from "console";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -41,44 +40,7 @@ let countries = [];
 let gameStarted = false;
 let currentPlayerIndex = 0;
 let playerTurnOrder, currentPlayer;
-let board = [
-  {
-    continent: "North America",
-    countriesNum: 3,
-    countries: new Array(3),
-    idx: 0,
-  },
-  {
-    continent: "South America",
-    countriesNum: 4,
-    countries: new Array(4),
-    idx: 0,
-  },
-  {
-    continent: "Europe",
-    countriesNum: 5,
-    countries: new Array(5),
-    idx: 0,
-  },
-  {
-    continent: "Africa",
-    countriesNum: 5,
-    countries: new Array(5),
-    idx: 0,
-  },
-  {
-    continent: "Asia",
-    countriesNum: 5,
-    countries: new Array(5),
-    idx: 0,
-  },
-  {
-    continent: "Oceania",
-    countriesNum: 3,
-    countries: new Array(3),
-    idx: 0,
-  },
-];
+let board = resetBoard();
 
 io.on("connection", (socket) => {
   console.log(`New user connected: ${socket.id}`);
@@ -140,14 +102,23 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("placeCountry", (country) => {
+  socket.on("placeCountry", (country, id) => {
     console.log(country);
     const continentIndex = board.findIndex(
       (continent) => continent.continent === country.continent
     );
     console.log(board[continentIndex]);
     const countryIndex = board[continentIndex].idx;
-    board[continentIndex].countries[countryIndex] = country;
+    board[continentIndex].countries[countryIndex] = {
+      ...country,
+      control: new Array(country.cities),
+      owner: [],
+    };
+    board[continentIndex].countries[countryIndex].control[0] = {
+      id: id,
+      color: players.find((player) => player.id === id).color,
+    };
+    board[continentIndex].countries[countryIndex].owner.push(id);
     io.emit("board", board);
   });
 
@@ -166,6 +137,7 @@ io.on("connection", (socket) => {
   socket.on("gameEnded", () => {
     gameStarted = false;
     currentPlayerIndex = 0;
+    board = resetBoard();
   });
 
   socket.on("disconnect", () => {

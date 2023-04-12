@@ -60,6 +60,26 @@
   background-color: black;
 }
 
+.red-city {
+  background-color: red;
+}
+
+.blue-city {
+  background-color: blue;
+}
+
+.yellow-city {
+  background-color: yellow;
+}
+
+.purple-city {
+  background-color: purple;
+}
+
+.orange-city {
+  background-color: orange;
+}
+
 .cities-container {
   display: flex;
   flex-wrap: wrap;
