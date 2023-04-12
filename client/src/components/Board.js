@@ -10,20 +10,19 @@ const Board = () => {
 
   return (
     <div className="game-board">
-      {board.length === 0
-        ? ""
-        : board.map((continent) => {
-            return (
-              <div key={continent.continent} className="continent-container">
-                <h2>{continent.continent}</h2>
-                <div className="continent-cards-container">
-                  {Array.from({ length: continent.countriesNum }, (_, i) => (
-                    <div className={`country-container ${i}`} key={i}></div>
-                  ))}
-                </div>
+      {board.length !== 0 &&
+        board.map((continent) => {
+          return (
+            <div key={continent.continent} className="continent-container">
+              <h2>{continent.continent}</h2>
+              <div className="continent-cards-container">
+                {continent.countries.map((country) => (
+                  <div className="country-container">{country?.name}</div>
+                ))}
               </div>
-            );
-          })}
+            </div>
+          );
+        })}
     </div>
   );
 };

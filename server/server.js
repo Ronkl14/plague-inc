@@ -41,31 +41,31 @@ let gameStarted = false;
 let currentPlayerIndex = 0;
 let playerTurnOrder, currentPlayer;
 let board = [
-  { continent: "North America", countriesNum: 3, countries: [] },
+  { continent: "North America", countriesNum: 3, countries: new Array(3) },
   {
     continent: "South America",
     countriesNum: 4,
-    countries: [],
+    countries: new Array(4),
   },
   {
     continent: "Europe",
     countriesNum: 5,
-    countries: [],
+    countries: new Array(5),
   },
   {
     continent: "Africa",
     countriesNum: 5,
-    countries: [],
+    countries: new Array(5),
   },
   {
     continent: "Asia",
     countriesNum: 5,
-    countries: [],
+    countries: new Array(5),
   },
   {
     continent: "Oceania",
     countriesNum: 3,
-    countries: [],
+    countries: new Array(3),
   },
 ];
 
