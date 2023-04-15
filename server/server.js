@@ -119,6 +119,7 @@ io.on("connection", (socket) => {
       color: players.find((player) => player.id === id).color,
     };
     board[continentIndex].countries[countryIndex].owner.push(id);
+    board[continentIndex].idx += 1;
     io.emit("board", board);
   });
 
