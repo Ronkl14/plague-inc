@@ -1,4 +1,10 @@
-import { PlayerArea, Countries, Board, PlayerScores } from "../components";
+import {
+  PlayerArea,
+  Countries,
+  Board,
+  PlayerScores,
+  TurnPhases,
+} from "../components";
 import { usePlayerGlobalContext } from "../context/PlayerContext";
 import { useEffect } from "react";
 import socket from "../utils/socket";
@@ -14,6 +20,7 @@ const GameRoom = () => {
   return (
     <>
       <PlayerScores />
+      <TurnPhases />
       <PlayerArea />
       <Countries />
       <Board />

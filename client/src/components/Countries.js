@@ -17,7 +17,7 @@ const Countries = () => {
   useEffect(() => {
     console.log(startingCountry);
     if (startingCountry.length !== 0) {
-      socket.emit("placeCountry", startingCountry[0][0], socket.id);
+      socket.emit("placeStartingCountry", startingCountry[0][0], socket.id);
     }
   }, [startingCountry]);
 

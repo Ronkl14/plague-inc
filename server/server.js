@@ -102,7 +102,7 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("placeCountry", (country, id) => {
+  socket.on("placeStartingCountry", (country, id) => {
     console.log(country);
     const continentIndex = board.findIndex(
       (continent) => continent.continent === country.continent
