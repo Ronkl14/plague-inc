@@ -8,14 +8,14 @@ const TurnPhases = () => {
   const { currentPlayer } = usePlayerGlobalContext();
 
   useEffect(() => {
-    if (currentPlayer.id === socket.id) {
-      setCurrentPlayerTurn(true);
-    }
+    currentPlayer.id === socket.id
+      ? setCurrentPlayerTurn(true)
+      : setCurrentPlayerTurn(false);
   }, [currentPlayer]);
 
-  useEffect(() => {
-    console.log(currentPlayerTurn);
-  }, [currentPlayerTurn]);
+  function turnEndHandler() {
+    socket.emit("turnEnded");
+  }
 
   return (
     <div>
@@ -43,7 +43,9 @@ const TurnPhases = () => {
         <h3>Phase 5: Death</h3>
         <p>Roll a die to destroy countries</p>
       </div>
-      <button disabled={!currentPlayerTurn}>End turn</button>
+      <button disabled={!currentPlayerTurn} onClick={turnEndHandler}>
+        End turn
+      </button>
     </div>
   );
 };

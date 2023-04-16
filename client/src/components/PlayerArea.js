@@ -8,7 +8,10 @@ const PlayerArea = () => {
   const traitCards = useFetchCards(cardIndices, getTraitCard);
 
   useEffect(() => {
-    socket.on("playerCards", setCardIndices);
+    socket.on("playerCards", (players) => {
+      const cards = players.find((player) => player.id === socket.id).cards;
+      setCardIndices(cards);
+    });
   }, []);
 
   return (

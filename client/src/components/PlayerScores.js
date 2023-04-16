@@ -5,9 +5,9 @@ import socket from "../utils/socket";
 const PlayerScores = () => {
   const { playerTurnOrder, players, currentPlayer } = usePlayerGlobalContext();
 
-  function turnEndHandler() {
-    socket.emit("turnEnded");
-  }
+  // function turnEndHandler() {
+  //   socket.emit("turnEnded");
+  // }
 
   return (
     <div>
@@ -24,7 +24,7 @@ const PlayerScores = () => {
           </p>
         );
       })}
-      <button onClick={turnEndHandler}>End turn</button>
+      {/* <button onClick={turnEndHandler}>End turn</button> */}
     </div>
   );
 };

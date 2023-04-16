@@ -8,10 +8,6 @@ const Board = () => {
     socket.on("board", setBoard);
   }, []);
 
-  useEffect(() => {
-    console.log(board);
-  }, [board]);
-
   return (
     <div className="game-board">
       {board.length !== 0 &&
@@ -27,7 +23,10 @@ const Board = () => {
                       <div className="cities-container">
                         {country?.control.map((city) => {
                           return (
-                            <div className={`city ${city?.color}-city`}></div>
+                            <div
+                              key={Math.random()}
+                              className={`city ${city?.color}-city`}
+                            ></div>
                           );
                         })}
                       </div>
