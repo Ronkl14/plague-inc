@@ -72,7 +72,7 @@ io.on("connection", (socket) => {
       for (let i = 1; i <= 5; i++) {
         players.forEach((player) => player.cards.push(cards.shift()));
       }
-      console.log(players);
+      // console.log(players);
       io.emit("playerCards", players);
       countries = getShuffledNumbers(NUMBER_OF_COUNTRY_CARDS);
       players.forEach((player) => {
@@ -154,6 +154,7 @@ io.on("connection", (socket) => {
         }
       })
     );
+    // console.log(DNAcount);
     io.emit("DNAcalculated", DNAcount);
   });
 

@@ -12,12 +12,18 @@ import { useGameGlobalContext } from "../context/GameContext";
 
 const GameRoom = () => {
   const { setPlayerTurnOrder, setCurrentPlayer } = usePlayerGlobalContext();
-  const { traitsLoaded, boardLoaded } = useGameGlobalContext();
+  const { traitsLoaded, boardLoaded, setGameLoaded } = useGameGlobalContext();
 
   useEffect(() => {
     socket.on("playerTurns", setPlayerTurnOrder);
     socket.on("currentPlayer", setCurrentPlayer);
   }, [setCurrentPlayer, setPlayerTurnOrder]);
+
+  useEffect(() => {
+    if (traitsLoaded && boardLoaded) {
+      setGameLoaded(true);
+    }
+  }, [traitsLoaded, boardLoaded, setGameLoaded]);
 
   return (
     <>
