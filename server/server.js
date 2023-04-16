@@ -52,6 +52,8 @@ io.on("connection", (socket) => {
       ready: false,
       color: color,
       score: 0,
+      traitsLoaded: false,
+      startingCountryLoaded: false,
     });
     io.emit("playerList", players);
   });
@@ -71,9 +73,6 @@ io.on("connection", (socket) => {
         players.forEach((player) => player.cards.push(cards.shift()));
       }
       console.log(players);
-      // players.forEach((player) => {
-      //   io.to(player.id).emit("playerCards", player.cards);
-      // });
       io.emit("playerCards", players);
       countries = getShuffledNumbers(NUMBER_OF_COUNTRY_CARDS);
       players.forEach((player) => {
@@ -124,6 +123,16 @@ io.on("connection", (socket) => {
     io.emit("board", board);
   });
 
+  socket.on("traitsLoaded", (id) => {
+    players.find((player) => player.id === id).traitsLoaded = true;
+    io.emit("playerList", players);
+  });
+
+  socket.on("startingCountryLoaded", (id) => {
+    players.find((player) => player.id === id).startingCountryLoaded = true;
+    io.emit("playerList", players);
+  });
+
   socket.on("turnEnded", () => {
     if (currentPlayerIndex === players.length - 1) {
       currentPlayerIndex = 0;
@@ -134,6 +143,23 @@ io.on("connection", (socket) => {
       (player) => player.id === playerTurnOrder[currentPlayerIndex]
     );
     io.emit("currentPlayer", currentPlayer);
+  });
+
+  socket.on("phaseDNA", (id) => {
+    let DNAcount = 0;
+    board.forEach((continent) =>
+      continent.countries.map((country) => {
+        if (country.owner.includes(id)) {
+          DNAcount += 1;
+        }
+      })
+    );
+    io.emit("DNAcalculated", DNAcount);
+  });
+
+  socket.on("updateScore", (score, id) => {
+    players.find((player) => player.id === id).score += score;
+    io.emit("playerList", players);
   });
 
   socket.on("gameEnded", () => {

@@ -5,10 +5,6 @@ import socket from "../utils/socket";
 const PlayerScores = () => {
   const { playerTurnOrder, players, currentPlayer } = usePlayerGlobalContext();
 
-  // function turnEndHandler() {
-  //   socket.emit("turnEnded");
-  // }
-
   return (
     <div>
       {playerTurnOrder.map((id) => {
@@ -19,6 +15,7 @@ const PlayerScores = () => {
               players.find((user) => user.id === id).color
             }`}
           >
+            {socket.id === id ? "*" : ""}
             {players.find((user) => user.id === id).username}, DNA:
             {players.find((user) => user.id === id).score}
           </p>

@@ -2,12 +2,16 @@ import { useEffect, useState } from "react";
 import socket from "../utils/socket";
 import { getCountryCard } from "../api/api";
 import useFetchCards from "../hooks/useFetchCards";
+import { usePlayerGlobalContext } from "../context/PlayerContext";
+import { useGameGlobalContext } from "../context/GameContext";
 
 const Countries = () => {
   const [countryCardsIndices, setCountryCardsIndices] = useState([]);
   const countryCards = useFetchCards(countryCardsIndices, getCountryCard);
   const [startingCountryIndex, setStartingCountryIndex] = useState([]);
   const startingCountry = useFetchCards(startingCountryIndex, getCountryCard);
+  const { players } = usePlayerGlobalContext();
+  const { setBoardLoaded, boardLoaded } = useGameGlobalContext();
 
   useEffect(() => {
     socket.on("countryCards", setCountryCardsIndices);
@@ -17,8 +21,21 @@ const Countries = () => {
   useEffect(() => {
     if (startingCountry.length !== 0) {
       socket.emit("placeStartingCountry", startingCountry[0][0], socket.id);
+      socket.emit("startingCountryLoaded", socket.id);
     }
   }, [startingCountry]);
+
+  useEffect(() => {
+    if (players.every((player) => player.startingCountryLoaded)) {
+      setBoardLoaded(true);
+    }
+  }, [players]);
+
+  useEffect(() => {
+    if (boardLoaded) {
+      console.log("board:", boardLoaded);
+    }
+  }, [boardLoaded]);
 
   return (
     countryCards.length !== 0 && (

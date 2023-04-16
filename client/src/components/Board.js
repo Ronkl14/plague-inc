@@ -8,6 +8,10 @@ const Board = () => {
     socket.on("board", setBoard);
   }, []);
 
+  useEffect(() => {
+    console.log(board);
+  }, [board]);
+
   return (
     <div className="game-board">
       {board.length !== 0 &&
