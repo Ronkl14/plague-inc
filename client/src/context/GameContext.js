@@ -7,6 +7,8 @@ const GameProvider = ({ children }) => {
   const [boardLoaded, setBoardLoaded] = useState(false);
   const [gameLoaded, setGameLoaded] = useState(false);
   const [phase, setPhase] = useState(1);
+  const [countryPlaced, setCountryPlaced] = useState(false);
+  const [evolved, setEvolved] = useState(false);
 
   return (
     <GameContext.Provider
@@ -19,6 +21,10 @@ const GameProvider = ({ children }) => {
         setGameLoaded,
         phase,
         setPhase,
+        countryPlaced,
+        setCountryPlaced,
+        evolved,
+        setEvolved,
       }}
     >
       {children}

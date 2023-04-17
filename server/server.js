@@ -52,6 +52,8 @@ io.on("connection", (socket) => {
       ready: false,
       color: color,
       score: 0,
+      infectivity: 2,
+      lethality: 1,
       traitsLoaded: false,
       startingCountryLoaded: false,
     });
@@ -145,6 +147,15 @@ io.on("connection", (socket) => {
     } else {
       io.emit("fullContinent");
     }
+  });
+
+  socket.on("evolve", (id, price, effects) => {
+    const playerIdx = players.findIndex((player) => player.id === id);
+    players[playerIdx].score -= price;
+    effects.forEach((effect) => {
+      players[playerIdx][effect[0]] += effect[1];
+    });
+    io.emit("playerList", players);
   });
 
   socket.on("traitsLoaded", (id) => {

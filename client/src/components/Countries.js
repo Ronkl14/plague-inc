@@ -11,16 +11,18 @@ const Countries = () => {
   const [startingCountryIndex, setStartingCountryIndex] = useState([]);
   const startingCountry = useFetchCards(startingCountryIndex, getCountryCard);
   const { players, currentPlayer } = usePlayerGlobalContext();
-  const { setBoardLoaded, boardLoaded, phase } = useGameGlobalContext();
-  const [countryPlaced, setCountryPlaced] = useState(false);
+  const {
+    setBoardLoaded,
+    boardLoaded,
+    phase,
+    countryPlaced,
+    setCountryPlaced,
+  } = useGameGlobalContext();
   const [countryCardsState, setCountryCardsState] = useState([]);
 
   useEffect(() => {
     socket.on("countryCards", setCountryCardsIndices);
     socket.on("startingCountry", setStartingCountryIndex);
-    socket.on("fullContinent", () => {
-      console.log("continent if full");
-    });
     socket.on("countryPlaced", (countryName) => {
       console.log("before:", countryCardsState);
       setCountryPlaced(true);

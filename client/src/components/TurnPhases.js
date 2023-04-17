@@ -8,7 +8,14 @@ const TurnPhases = () => {
   const [currentPlayerTurn, setCurrentPlayerTurn] = useState(false);
   const { currentPlayer } = usePlayerGlobalContext();
   const [receivedDNA, setReceivedDNA] = useState(0);
-  const { gameLoaded, phase, setPhase } = useGameGlobalContext();
+  const {
+    gameLoaded,
+    phase,
+    setPhase,
+    countryPlaced,
+    setCountryPlaced,
+    setEvolved,
+  } = useGameGlobalContext();
 
   useEffect(() => {
     socket.on("DNAcalculated", setReceivedDNA);
@@ -38,6 +45,16 @@ const TurnPhases = () => {
     nextPhase();
   }
 
+  function finishCountryPhase() {
+    nextPhase();
+    setCountryPlaced(false);
+  }
+
+  function finishEvolvePhase() {
+    nextPhase();
+    setEvolved(false);
+  }
+
   function nextPhase() {
     setPhase(phase + 1);
   }
@@ -61,12 +78,22 @@ const TurnPhases = () => {
       <div>
         <h3>Phase 2: Country</h3>
         <p>Choose a country card</p>
-        <button disabled={!currentPlayerTurn || phase !== 2}>Next Phase</button>
+        <button
+          disabled={!currentPlayerTurn || phase !== 2 || !countryPlaced}
+          onClick={finishCountryPhase}
+        >
+          Next Phase
+        </button>
       </div>
       <div>
         <h3>Phase 3: Evolution</h3>
         <p>Evolve a trait card</p>
-        <button disabled={!currentPlayerTurn || phase !== 3}>Next Phase</button>
+        <button
+          disabled={!currentPlayerTurn || phase !== 3}
+          onClick={finishEvolvePhase}
+        >
+          Next Phase
+        </button>
       </div>
       <div>
         <h3>Phase 4: Infection</h3>

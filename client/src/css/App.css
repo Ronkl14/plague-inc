@@ -88,3 +88,14 @@
   align-items: center;
   margin-top: 20px;
 }
+
+.trait-card {
+  height: 250px;
+  width: 150px;
+  border: 1px solid black;
+}
+
+.trait-cards-container {
+  display: flex;
+  gap: 10px;
+}
