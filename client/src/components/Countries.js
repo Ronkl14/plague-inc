@@ -66,7 +66,6 @@ const Countries = () => {
   function placeCountry(e) {
     const countryDiv = e.target.parentElement;
     const countryName = countryDiv.getElementsByClassName("country-name");
-    // console.log(countryName[0].textContent);
     const country = countryCards.find(
       (card) => card[0].name === countryName[0].textContent
     )[0];
