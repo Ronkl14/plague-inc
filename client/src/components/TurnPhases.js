@@ -38,6 +38,7 @@ const TurnPhases = () => {
 
   function turnEndHandler() {
     socket.emit("turnEnded");
+    setPhase(1);
   }
 
   function updateScore() {
@@ -98,7 +99,12 @@ const TurnPhases = () => {
       <div>
         <h3>Phase 4: Infection</h3>
         <p>Infect countries</p>
-        <button disabled={!currentPlayerTurn || phase !== 4}>Next Phase</button>
+        <button
+          disabled={!currentPlayerTurn || phase !== 4}
+          onClick={nextPhase}
+        >
+          Next Phase
+        </button>
       </div>
       <div>
         <h3>Phase 5: Death</h3>

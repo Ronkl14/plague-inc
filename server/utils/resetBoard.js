@@ -7,25 +7,25 @@ function resetBoard() {
       idx: 0,
     },
     {
-      continent: "South America",
-      countriesNum: 4,
-      countries: new Array(4),
-      idx: 0,
-    },
-    {
       continent: "Europe",
       countriesNum: 5,
       countries: new Array(5),
       idx: 0,
     },
     {
-      continent: "Africa",
+      continent: "Asia",
       countriesNum: 5,
       countries: new Array(5),
       idx: 0,
     },
     {
-      continent: "Asia",
+      continent: "South America",
+      countriesNum: 4,
+      countries: new Array(4),
+      idx: 0,
+    },
+    {
+      continent: "Africa",
       countriesNum: 5,
       countries: new Array(5),
       idx: 0,

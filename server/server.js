@@ -158,6 +158,15 @@ io.on("connection", (socket) => {
     io.emit("playerList", players);
   });
 
+  socket.on("infectCity", (id, continent, country, city) => {
+    const color = players.find((player) => player.id === id).color;
+    board[continent].countries[country].control[city] = {
+      id: id,
+      color: color,
+    };
+    io.emit("board", board);
+  });
+
   socket.on("traitsLoaded", (id) => {
     players.find((player) => player.id === id).traitsLoaded = true;
     io.emit("playerList", players);
