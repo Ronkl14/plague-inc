@@ -10,12 +10,25 @@ const Countries = () => {
   const countryCards = useFetchCards(countryCardsIndices, getCountryCard);
   const [startingCountryIndex, setStartingCountryIndex] = useState([]);
   const startingCountry = useFetchCards(startingCountryIndex, getCountryCard);
-  const { players } = usePlayerGlobalContext();
-  const { setBoardLoaded, boardLoaded } = useGameGlobalContext();
+  const { players, currentPlayer } = usePlayerGlobalContext();
+  const { setBoardLoaded, boardLoaded, phase } = useGameGlobalContext();
+  const [countryPlaced, setCountryPlaced] = useState(false);
+  const [countryCardsState, setCountryCardsState] = useState([]);
 
   useEffect(() => {
     socket.on("countryCards", setCountryCardsIndices);
     socket.on("startingCountry", setStartingCountryIndex);
+    socket.on("fullContinent", () => {
+      console.log("continent if full");
+    });
+    socket.on("countryPlaced", (countryName) => {
+      console.log("before:", countryCardsState);
+      setCountryPlaced(true);
+      setCountryCardsState((prevState) => {
+        return prevState.filter((country) => country[0].name !== countryName);
+      });
+      console.log("state length:", countryCardsState.length);
+    });
   }, []);
 
   useEffect(() => {
@@ -37,19 +50,46 @@ const Countries = () => {
     }
   }, [boardLoaded]);
 
+  useEffect(() => {
+    console.log(countryCards);
+    if (countryCards.length !== 0) {
+      setCountryCardsState(countryCards);
+    }
+  }, [countryCards]);
+
+  useEffect(() => {
+    console.log("country cards state:", countryCardsState);
+  }, [countryCardsState]);
+
+  function placeCountry(e) {
+    const countryDiv = e.target.parentElement;
+    const countryName = countryDiv.getElementsByClassName("country-name");
+    // console.log(countryName[0].textContent);
+    const country = countryCards.find(
+      (card) => card[0].name === countryName[0].textContent
+    )[0];
+    console.log(country);
+    socket.emit("placeCountry", country, socket.id);
+  }
+
   return (
-    countryCards.length !== 0 && (
+    countryCardsState.length !== 0 && (
       <div className="country-stack">
         <p className="country-container">Stack</p>
-        {countryCards.slice(0, 3).map((country) => (
+        {countryCardsState.slice(0, 3).map((country) => (
           <div key={country[0].cardID} className="country-container">
-            <p>{country[0].name}</p>
-            <p>{country[0].continent}</p>
+            <p className="country-name">{country[0].name}</p>
+            <p className="country-continent">{country[0].continent}</p>
             <div className="cities-container">
               {Array.from({ length: country[0].cities }, (_, i) => (
                 <div className={`city ${i}`} key={i}></div>
               ))}
             </div>
+            {phase === 2 &&
+              currentPlayer.id === socket.id &&
+              !countryPlaced && (
+                <button onClick={placeCountry}>Place Country</button>
+              )}
           </div>
         ))}
       </div>

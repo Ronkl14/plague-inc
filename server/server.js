@@ -8,7 +8,7 @@ import { fileURLToPath } from "url";
 import connectDB from "./config/db.js";
 import router from "./routes/router.js";
 
-import { getShuffledNumbers, resetBoard } from "./utils/index.js";
+import { getShuffledNumbers, resetBoard, updateIdx } from "./utils/index.js";
 import {
   NUMBER_OF_TRAIT_CARDS,
   NUMBER_OF_COUNTRY_CARDS,
@@ -121,6 +121,30 @@ io.on("connection", (socket) => {
     board[continentIndex].countries[countryIndex].owner.push(id);
     board[continentIndex].idx += 1;
     io.emit("board", board);
+  });
+
+  socket.on("placeCountry", (country, id) => {
+    const continentIndex = board.findIndex(
+      (continent) => continent.continent === country.continent
+    );
+    const countryIndex = board[continentIndex].idx;
+    if (countryIndex !== -1) {
+      board[continentIndex].countries[countryIndex] = {
+        ...country,
+        control: new Array(country.cities),
+        owner: [],
+        isFull: false,
+      };
+      io.emit("board", board);
+      io.emit(
+        "countryPlaced",
+        board[continentIndex].countries[countryIndex].name
+      );
+      console.log(board[continentIndex].countries[countryIndex].name);
+      board[continentIndex].idx = updateIdx(board[continentIndex].countries);
+    } else {
+      io.emit("fullContinent");
+    }
   });
 
   socket.on("traitsLoaded", (id) => {

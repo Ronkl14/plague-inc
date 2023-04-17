@@ -8,8 +8,7 @@ const TurnPhases = () => {
   const [currentPlayerTurn, setCurrentPlayerTurn] = useState(false);
   const { currentPlayer } = usePlayerGlobalContext();
   const [receivedDNA, setReceivedDNA] = useState(0);
-  const { gameLoaded } = useGameGlobalContext();
-  const [phase, setPhase] = useState(1);
+  const { gameLoaded, phase, setPhase } = useGameGlobalContext();
 
   useEffect(() => {
     socket.on("DNAcalculated", setReceivedDNA);
