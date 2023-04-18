@@ -37,6 +37,7 @@ body::before {
   border-radius: 5px;
   position: relative;
   text-align: center;
+  background-color: rgb(0, 0, 0, 0.5);
 }
 
 .country-stack {
@@ -124,8 +125,25 @@ body::before {
   height: 250px;
   width: 150px;
   border: 1px solid white;
+  font-weight: bold;
   border-radius: 5px;
   text-align: center;
+  background-image: url("../../public/assets/img/trait-card.jpg");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  z-index: -7;
+}
+
+.trait-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -5;
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 .trait-cards-container {
@@ -137,6 +155,8 @@ body::before {
   transform: translate(-50%, -50%);
   background-color: black;
   padding: 10px;
+  border-radius: 5px;
+  box-shadow: 3px 4px 11px 4px rgba(255, 255, 255, 0.71);
 }
 
 .game-page {
@@ -233,8 +253,15 @@ body::before {
 .lobby {
   padding: 30px;
   display: flex;
+  height: 100vh;
 }
 
 .lobby-video {
-  margin: 140px auto;
+  margin: auto;
+}
+
+.trait-price {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
 }

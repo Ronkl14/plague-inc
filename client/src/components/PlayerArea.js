@@ -75,7 +75,10 @@ const PlayerArea = () => {
         {traitCards.map((card) => (
           <div key={card[0].cardID} className={`trait-card ${card[0].cardID}`}>
             <p className="trait-name">{card[0].name}</p>
-            <p className="trait-price">{card[0].price}</p>
+            <div className="trait-price">
+              <p>{card[0].price}</p>
+              <div className="dna-symbol"></div>
+            </div>
             <div className="trait-effects">
               {card[0].effects.map((effect) => (
                 <p>
@@ -84,7 +87,9 @@ const PlayerArea = () => {
               ))}
             </div>
             {phase === 3 && !evolved && (
-              <button onClick={evolveTrait}>Evolve</button>
+              <button onClick={evolveTrait} className="btn">
+                Evolve
+              </button>
             )}
           </div>
         ))}

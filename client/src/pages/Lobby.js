@@ -72,7 +72,7 @@ function Lobby() {
         className="lobby-video"
         ref={videoRef}
         src="/assets/video/video.mp4"
-        width="600"
+        width="800"
         autoPlay
         playsInline
         controls
