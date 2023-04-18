@@ -229,3 +229,12 @@ body::before {
   background-size: cover;
   background-repeat: no-repeat;
 }
+
+.lobby {
+  padding: 30px;
+  display: flex;
+}
+
+.lobby-video {
+  margin: 140px auto;
+}
