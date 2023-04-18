@@ -89,7 +89,9 @@ const Countries = () => {
             {phase === 2 &&
               currentPlayer.id === socket.id &&
               !countryPlaced && (
-                <button onClick={placeCountry}>Place Country</button>
+                <button className="place-country-btn" onClick={placeCountry}>
+                  Place Country
+                </button>
               )}
           </div>
         ))}

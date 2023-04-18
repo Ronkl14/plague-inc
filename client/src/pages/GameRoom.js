@@ -26,13 +26,17 @@ const GameRoom = () => {
   }, [traitsLoaded, boardLoaded, setGameLoaded]);
 
   return (
-    <>
-      <PlayerScores />
-      <TurnPhases />
-      <PlayerArea />
-      <Countries />
-      <Board />
-    </>
+    <div className="game-page">
+      <div className="left-main-div">
+        <Countries />
+        <Board />
+      </div>
+      <div className="right-main-div">
+        <PlayerScores />
+        <TurnPhases />
+      </div>
+      {/* <PlayerArea /> */}
+    </div>
   );
 };
 
