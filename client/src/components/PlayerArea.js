@@ -9,8 +9,14 @@ const PlayerArea = () => {
   const [cardIndices, setCardIndices] = useState([]);
   const traitCards = useFetchCards(cardIndices, getTraitCard);
   const { players } = usePlayerGlobalContext();
-  const { setTraitsLoaded, traitsLoaded, phase, evolved, setEvolved } =
-    useGameGlobalContext();
+  const {
+    setTraitsLoaded,
+    traitsLoaded,
+    phase,
+    evolved,
+    setEvolved,
+    showTraits,
+  } = useGameGlobalContext();
 
   useEffect(() => {
     socket.on("playerCards", (players) => {
@@ -63,7 +69,9 @@ const PlayerArea = () => {
 
   return (
     traitCards.length !== 0 && (
-      <div className="trait-cards-container hide-traits">
+      <div
+        className={`trait-cards-container ${showTraits ? "" : "hide-traits"}`}
+      >
         {traitCards.map((card) => (
           <div key={card[0].cardID} className={`trait-card ${card[0].cardID}`}>
             <p className="trait-name">{card[0].name}</p>

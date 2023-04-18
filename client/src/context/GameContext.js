@@ -9,6 +9,7 @@ const GameProvider = ({ children }) => {
   const [phase, setPhase] = useState(1);
   const [countryPlaced, setCountryPlaced] = useState(false);
   const [evolved, setEvolved] = useState(false);
+  const [showTraits, setShowTraits] = useState(false);
 
   return (
     <GameContext.Provider
@@ -25,6 +26,8 @@ const GameProvider = ({ children }) => {
         setCountryPlaced,
         evolved,
         setEvolved,
+        showTraits,
+        setShowTraits,
       }}
     >
       {children}

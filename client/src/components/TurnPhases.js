@@ -15,6 +15,8 @@ const TurnPhases = () => {
     countryPlaced,
     setCountryPlaced,
     setEvolved,
+    showTraits,
+    setShowTraits,
   } = useGameGlobalContext();
 
   useEffect(() => {
@@ -60,6 +62,10 @@ const TurnPhases = () => {
     setPhase(phase + 1);
   }
 
+  function displayTraits() {
+    setShowTraits(!showTraits);
+  }
+
   return (
     <div className="phase">
       <div>
@@ -70,6 +76,7 @@ const TurnPhases = () => {
           <p>get DNA points</p>
         )}
         <button
+          className="btn"
           disabled={!currentPlayerTurn || phase !== 1}
           onClick={updateScore}
         >
@@ -80,6 +87,7 @@ const TurnPhases = () => {
         <h3>Phase 2: Country</h3>
         <p>Choose a country card</p>
         <button
+          className="btn"
           disabled={!currentPlayerTurn || phase !== 2 || !countryPlaced}
           onClick={finishCountryPhase}
         >
@@ -90,6 +98,7 @@ const TurnPhases = () => {
         <h3>Phase 3: Evolution</h3>
         <p>Evolve a trait card</p>
         <button
+          className="btn"
           disabled={!currentPlayerTurn || phase !== 3}
           onClick={finishEvolvePhase}
         >
@@ -100,6 +109,7 @@ const TurnPhases = () => {
         <h3>Phase 4: Infection</h3>
         <p>Infect countries</p>
         <button
+          className="btn"
           disabled={!currentPlayerTurn || phase !== 4}
           onClick={nextPhase}
         >
@@ -110,12 +120,14 @@ const TurnPhases = () => {
         <h3>Phase 5: Death</h3>
         <p>Roll a die to destroy countries</p>
         <button
+          className="btn"
           disabled={!currentPlayerTurn || phase !== 5}
           onClick={turnEndHandler}
         >
           End turn
         </button>
       </div>
+      <div className="trait-card-stack" onClick={displayTraits}></div>
     </div>
   );
 };
