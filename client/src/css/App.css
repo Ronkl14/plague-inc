@@ -130,6 +130,12 @@ body::before {
 .trait-cards-container {
   display: flex;
   gap: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: black;
+  padding: 10px;
 }
 
 .game-page {
@@ -166,4 +172,41 @@ body::before {
   background-image: url("../../public/assets/img/Plague-Inc-Country-Card.jpg");
   background-size: cover;
   background-repeat: no-repeat;
+}
+
+.current-player-symbol {
+  height: 20px;
+  width: 30px;
+}
+
+.symbol-true {
+  background-image: url("../../public/assets/img/covid.png");
+  background-size: cover;
+}
+
+.player-score {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dna-symbol {
+  height: 30px;
+  width: 25px;
+  background-image: url("../../public/assets/img/dna.png");
+  background-size: cover;
+}
+
+.user-details {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.phase {
+  margin: 10px 0;
+}
+
+.hide-traits {
+  /* display: none; */
 }

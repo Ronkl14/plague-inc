@@ -63,7 +63,7 @@ const PlayerArea = () => {
 
   return (
     traitCards.length !== 0 && (
-      <div className="trait-cards-container">
+      <div className="trait-cards-container hide-traits">
         {traitCards.map((card) => (
           <div key={card[0].cardID} className={`trait-card ${card[0].cardID}`}>
             <p className="trait-name">{card[0].name}</p>

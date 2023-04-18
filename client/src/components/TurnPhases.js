@@ -61,7 +61,7 @@ const TurnPhases = () => {
   }
 
   return (
-    <div>
+    <div className="phase">
       <div>
         <h3>Phase 1: DNA</h3>
         {currentPlayer.id === socket.id ? (
@@ -76,7 +76,7 @@ const TurnPhases = () => {
           Next Phase
         </button>
       </div>
-      <div>
+      <div className="phase">
         <h3>Phase 2: Country</h3>
         <p>Choose a country card</p>
         <button
@@ -86,7 +86,7 @@ const TurnPhases = () => {
           Next Phase
         </button>
       </div>
-      <div>
+      <div className="phase">
         <h3>Phase 3: Evolution</h3>
         <p>Evolve a trait card</p>
         <button
@@ -96,7 +96,7 @@ const TurnPhases = () => {
           Next Phase
         </button>
       </div>
-      <div>
+      <div className="phase">
         <h3>Phase 4: Infection</h3>
         <p>Infect countries</p>
         <button
@@ -106,16 +106,16 @@ const TurnPhases = () => {
           Next Phase
         </button>
       </div>
-      <div>
+      <div className="phase">
         <h3>Phase 5: Death</h3>
         <p>Roll a die to destroy countries</p>
+        <button
+          disabled={!currentPlayerTurn || phase !== 5}
+          onClick={turnEndHandler}
+        >
+          End turn
+        </button>
       </div>
-      <button
-        disabled={!currentPlayerTurn || phase !== 5}
-        onClick={turnEndHandler}
-      >
-        End turn
-      </button>
     </div>
   );
 };

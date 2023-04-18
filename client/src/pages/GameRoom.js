@@ -35,7 +35,7 @@ const GameRoom = () => {
         <PlayerScores />
         <TurnPhases />
       </div>
-      {/* <PlayerArea /> */}
+      <PlayerArea />
     </div>
   );
 };

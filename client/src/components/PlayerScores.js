@@ -9,16 +9,23 @@ const PlayerScores = () => {
     <div>
       {playerTurnOrder.map((id) => {
         return (
-          <p
+          <div
             key={id}
             className={`${currentPlayer.id === id ? "current-player" : ""} ${
               players.find((user) => user.id === id).color
-            }`}
+            } player-score`}
           >
-            {socket.id === id ? "*" : ""}
-            {players.find((user) => user.id === id).username}, DNA:
-            {players.find((user) => user.id === id).score}
-          </p>
+            {socket.id === id ? (
+              <div className="current-player-symbol symbol-true"></div>
+            ) : (
+              <div className="current-player-symbol"></div>
+            )}
+            <p className="user-details">
+              {players.find((user) => user.id === id).username}
+              <div className="dna-symbol"></div>
+              {players.find((user) => user.id === id).score}
+            </p>
+          </div>
         );
       })}
       {/* <button onClick={turnEndHandler}>End turn</button> */}
