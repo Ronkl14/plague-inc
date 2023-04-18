@@ -76,7 +76,7 @@ const Countries = () => {
   return (
     countryCardsState.length !== 0 && (
       <div className="country-stack">
-        <p className="country-container">Stack</p>
+        <div className="country-container stack-card"></div>
         {countryCardsState.slice(0, 3).map((country) => (
           <div key={country[0].cardID} className="country-container">
             <p className="country-name">{country[0].name}</p>
