@@ -17,10 +17,6 @@ const Board = () => {
     setInfectivity(currentPlayer.infectivity);
   }, [currentPlayer]);
 
-  useEffect(() => {
-    console.log(board);
-  }, [board]);
-
   function infectCity(e) {
     if (phase === 4) {
       const cityIdx = e.target.classList[2];
@@ -32,8 +28,6 @@ const Board = () => {
         socket.emit("infectCity", socket.id, continentIdx, countryIdx, cityIdx);
         setInfectivity(infectivity - 1);
       }
-      console.log(continentIdx, cityIdx);
-      console.log("country:", e.target.parentElement.parentElement);
     }
   }
 

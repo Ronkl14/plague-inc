@@ -24,12 +24,10 @@ const Countries = () => {
     socket.on("countryCards", setCountryCardsIndices);
     socket.on("startingCountry", setStartingCountryIndex);
     socket.on("countryPlaced", (countryName) => {
-      console.log("before:", countryCardsState);
       setCountryPlaced(true);
       setCountryCardsState((prevState) => {
         return prevState.filter((country) => country[0].name !== countryName);
       });
-      console.log("state length:", countryCardsState.length);
     });
   }, []);
 
@@ -47,21 +45,10 @@ const Countries = () => {
   }, [players]);
 
   useEffect(() => {
-    if (boardLoaded) {
-      console.log("board:", boardLoaded);
-    }
-  }, [boardLoaded]);
-
-  useEffect(() => {
-    console.log(countryCards);
     if (countryCards.length !== 0) {
       setCountryCardsState(countryCards);
     }
   }, [countryCards]);
-
-  useEffect(() => {
-    console.log("country cards state:", countryCardsState);
-  }, [countryCardsState]);
 
   function placeCountry(e) {
     const countryDiv = e.target.parentElement;
@@ -69,7 +56,6 @@ const Countries = () => {
     const country = countryCards.find(
       (card) => card[0].name === countryName[0].textContent
     )[0];
-    console.log(country);
     socket.emit("placeCountry", country, socket.id);
   }
 

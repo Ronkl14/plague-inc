@@ -43,7 +43,7 @@ let playerTurnOrder, currentPlayer;
 let board = resetBoard();
 
 io.on("connection", (socket) => {
-  // console.log(`New user connected: ${socket.id}`);
+  console.log(`New user connected: ${socket.id}`);
 
   socket.on("enterLobby", (username, color) => {
     players.push({
@@ -61,7 +61,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("playerReady", () => {
-    // console.log(`${socket.id} ready`);
+    console.log(`${socket.id} ready`);
     const index = players.findIndex((player) => player.id === socket.id);
     players[index].ready = !players[index].ready;
     io.emit("playerList", players);
@@ -74,7 +74,6 @@ io.on("connection", (socket) => {
       for (let i = 1; i <= 5; i++) {
         players.forEach((player) => player.cards.push(cards.shift()));
       }
-      // console.log(players);
       io.emit("playerCards", players);
       countries = getShuffledNumbers(NUMBER_OF_COUNTRY_CARDS);
       players.forEach((player) => {
@@ -142,7 +141,6 @@ io.on("connection", (socket) => {
         "countryPlaced",
         board[continentIndex].countries[countryIndex].name
       );
-      console.log(board[continentIndex].countries[countryIndex].name);
       board[continentIndex].idx = updateIdx(board[continentIndex].countries);
     } else {
       io.emit("fullContinent");
@@ -198,7 +196,6 @@ io.on("connection", (socket) => {
         }
       })
     );
-    // console.log(DNAcount);
     io.emit("DNAcalculated", DNAcount);
   });
 
@@ -214,7 +211,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    // console.log(`User disconnected: ${socket.id}`);
+    console.log(`User disconnected: ${socket.id}`);
     players = players.filter((player) => player.id !== socket.id);
     io.emit("playerList", players);
   });
@@ -237,6 +234,6 @@ if (process.env.NODE_ENV === "production") {
 const PORT = process.env.PORT || 5000;
 
 server.listen(
-  PORT
-  // console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
+  PORT,
+  console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`)
 );

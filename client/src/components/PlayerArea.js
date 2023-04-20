@@ -32,29 +32,20 @@ const PlayerArea = () => {
   }, [traitCards]);
 
   useEffect(() => {
-    if (traitsLoaded) {
-      console.log("traits:", traitsLoaded);
-    }
-  }, [traitsLoaded]);
-
-  useEffect(() => {
     if (players.every((player) => player.traitsLoaded)) {
       setTraitsLoaded(true);
     }
   }, [players]);
 
   function evolveTrait(e) {
-    // console.log(e.target.parentElement);
     const trait = e.target.parentElement;
     const price = trait.getElementsByClassName("trait-price")[0].textContent;
     const effectDiv = trait
       .getElementsByClassName("trait-effects")[0]
       .getElementsByTagName("p");
-    // console.log(effectDiv);
     let effects = [];
     for (let p of effectDiv) {
       const effectArr = p.textContent.split(" ");
-      console.log(p.textContent.split(" "));
       effects.push({
         name: effectArr[0].substring(0, effectArr[0].length - 1),
         effect: effectArr[1].substring(1),
